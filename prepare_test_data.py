@@ -33,7 +33,7 @@ target_files = {r:open("{}_{:02d}{}".format(ds_root, r, ds_ext), "w") for r in c
 change_counters = {r:0 for r in change_rates}
 source_file = open(data_source, "r")
 linecount = 1
-triple_pattern = re.compile(r"^\s*<[^>]+>\s+<[^>]+>\s+(<[^>]+>)\s+.$")
+triple_pattern = re.compile(r"^\s*<[^>]+>\s+<[^>]+>\s+(<[^>]+>)\s+\.$")
 line_changer = ObjectReplacer()
 for line in source_file:
     is_triple = triple_pattern.match(line)
