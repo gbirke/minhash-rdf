@@ -29,7 +29,6 @@ def triple_tokenizer(input_file, num_tokens):
     for line in input_file:
         is_triple = triple_pattern.match(line)
         if not is_triple:
-            print "'{}' does not match triple regex".format(line)
             continue
         triples.append(is_triple.group(0))
         if len(triples) == num_tokens:
