@@ -1,20 +1,13 @@
 import os.path
 import pickle
 import glob
+import sys
+import time
 
 import shingles
 import minhash
+import config
 
-
-
-
-SHINGLE_CONFIG = {
-    "byte": [6, 8, 12],
-    "word": [3, 5, 8],
-    "triple": [1, 2, 3, 5]
-}
-
-NUM_HASHES = 200
 
 def hash_dir(dir_glob, shingle_type, shingle_size):
     shingle_generator_func = getattr(shingles, "{}_tokenizer".format(shingle_type))
@@ -23,7 +16,7 @@ def hash_dir(dir_glob, shingle_type, shingle_size):
         target_filename = "{}_{}_{:02d}.p".format(fn_root, shingle_type, shingle_size)
         with open(filename, "r") as src, open(target_filename, "wb") as dst:
             generator = shingle_generator_func(src, shingle_size)
-            hashes = minhash.get_signature(generator, NUM_HASHES)
+            hashes = minhash.get_signature(generator, config.NUM_HASHES)
             data = {
                 "shingle_type": shingle_type,
                 "shingle_size": shingle_size,
@@ -31,6 +24,14 @@ def hash_dir(dir_glob, shingle_type, shingle_size):
             }
             pickle.dump(data, dst)
 
-for shingle_type in SHINGLE_CONFIG:
-    for size in SHINGLE_CONFIG[shingle_type]:
-        hash_dir(glob.glob("test_data/*.ttl"), shingle_type, size)
+if len(sys.argv) < 2:
+    data_dir = "test_data"
+else:
+    data_dir = sys.argv[1]
+
+for shingle_type in config.SHINGLE_CONFIG:
+    for size in config.SHINGLE_CONFIG[shingle_type]:
+        start = time.time()
+        hash_dir(glob.glob(os.path.join(data_dir, "*.ttl")), shingle_type, size)
+        end = time.time()
+        print "generated signatures for {} shingles ({} tokens) in {:.2f} seconds.".format(shingle_type, size, end-start)

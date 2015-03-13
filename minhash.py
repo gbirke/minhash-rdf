@@ -12,9 +12,12 @@ def get_signature(A, k=200, hash_func=pyhash.city_64()):
             signature[elm_hash] = 1
     return signature.keys()
 
-def minhash(A, B):
+def minhash_sets(A, B):
     SA = get_signature(A)
     SB = get_signature(B)
+    return minhash_signatures(SA, SB)
+
+def minhash_signatures(SA, SB):
     num_matches = sum([hminA == hminB for hminA , hminB in zip(SA, SB)])
     max_len_set = min([len(SA), len(SB)])
     return float(num_matches)/float(max_len_set)

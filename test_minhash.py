@@ -14,14 +14,14 @@ def test_get_signature_returns_k_lowest_values():
 def test_minhash_same_sets():
     s1 = ("4", "2", "3", "1")
     s2 = ("1", "2", "3", "4")
-    assert minhash.minhash(s1, s2) == 1.0
+    assert minhash.minhash_sets(s1, s2) == 1.0
 
 def test_minhash_different_sets():
     s1 = ("4", "2", "3", "1")
     s2 = ("5", "6", "7", "8")
-    assert minhash.minhash(s1, s2) == 0
+    assert minhash.minhash_sets(s1, s2) == 0
 
 def test_minhash_similar_sets():
     s1 = ("4", "2", "3", "1")
     s2 = ("1", "2", "5", "6")
-    assert minhash.minhash(s1, s2) == 0.25
+    assert minhash.minhash_sets(s1, s2) == 0.25

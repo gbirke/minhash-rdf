@@ -3,10 +3,10 @@ import re
 import collections
 import sys
 
-change_rates = [1, 5, 10, 25, 50]
-#change_rates = [50]
+import config
 
 class ObjectReplacer(object):
+    """ Switch objects in triple statements with objects from previous calls """
     def __init__(self):
         self.prev_objects = collections.deque(maxlen=20)
 
@@ -26,8 +26,8 @@ if len(sys.argv) < 2:
     print "You must give a data source as argument!"
     sys.exit(1)
 
+change_rates = config.CHANGE_RATES
 data_source = sys.argv[1]
-
 ds_root, ds_ext = os.path.splitext(data_source)
 target_files = {r:open("{}_{:02d}{}".format(ds_root, r, ds_ext), "w") for r in change_rates}
 change_counters = {r:0 for r in change_rates}
@@ -45,7 +45,7 @@ for line in source_file:
             target_files[r].write(line)
         else:
             change_counters[r] += 1
-            if not change_counters[r] % 2:
+            if not change_counters[r] % 2: # Edit on even changes, drop line on odd changes
                 target_files[r].write(changed_line)
     linecount += 1
 
