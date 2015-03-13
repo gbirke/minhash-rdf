@@ -53,6 +53,8 @@ docs/_build/
 # PyBuilder
 target/
 
+# project-specific files
 test_data/
 test_data2/
 cli.py
+comparison_results.db
