@@ -12,6 +12,17 @@ def get_signature(A, k=200, hash_func=pyhash.city_64()):
             signature[elm_hash] = 1
     return signature.keys()
 
+def get_signature_faster(A, k=200, hash_func=pyhash.city_64()):
+    """ Load all hashes in memory, then return the k lowest.
+
+        Is faster because hash list must not be sorted 
+        for every hash insert, but needs more memory.
+    """
+    hashes = []
+    for elm in A:
+        hashes.append(hash_func(elm))
+    return sorted(hashes)[:k]
+
 def minhash_sets(A, B):
     SA = get_signature(A)
     SB = get_signature(B)

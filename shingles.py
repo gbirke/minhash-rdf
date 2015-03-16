@@ -17,7 +17,7 @@ def word_tokenizer(input_file, num_tokens):
     for line in input_file:
         words_line = re.split("\s+", line)
         for word in words_line:
-            if not word:
+            if not word or word == ".":
                 continue
             words.append(word)
             if len(words) == num_tokens:

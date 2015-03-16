@@ -14,9 +14,12 @@ def hash_dir(dir_glob, shingle_type, shingle_size):
     for filename in dir_glob:
         fn_root, fn_ext = os.path.splitext(filename)
         target_filename = "{}_{}_{:02d}.p".format(fn_root, shingle_type, shingle_size)
+        # Skip existing files
+        if os.path.isfile(target_filename):
+            continue
         with open(filename, "r") as src, open(target_filename, "wb") as dst:
             generator = shingle_generator_func(src, shingle_size)
-            hashes = minhash.get_signature(generator, config.NUM_HASHES)
+            hashes = minhash.get_signature_faster(generator, config.NUM_HASHES)
             data = {
                 "shingle_type": shingle_type,
                 "shingle_size": shingle_size,
