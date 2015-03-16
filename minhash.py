@@ -21,7 +21,7 @@ def get_signature_faster(A, k=200, hash_func=pyhash.city_64()):
     hashes = []
     for elm in A:
         hashes.append(hash_func(elm))
-    return sorted(hashes)[:k]
+    return sorted(set(hashes))[:k]
 
 def minhash_sets(A, B):
     SA = get_signature(A)
@@ -29,6 +29,6 @@ def minhash_sets(A, B):
     return minhash_signatures(SA, SB)
 
 def minhash_signatures(SA, SB):
-    num_matches = sum([hminA == hminB for hminA , hminB in zip(SA, SB)])
+    num_matches = len(SA.intersection(SB))
     max_len_set = min([len(SA), len(SB)])
     return float(num_matches)/float(max_len_set)
