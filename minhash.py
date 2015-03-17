@@ -15,7 +15,7 @@ def get_signature(A, k=200, hash_func=pyhash.city_64()):
 def get_signature_faster(A, k=200, hash_func=pyhash.city_64()):
     """ Load all hashes in memory, then return the k lowest.
 
-        Is faster because hash list must not be sorted 
+        Is faster because the hash list must not be sorted
         for every hash insert, but needs more memory.
     """
     hashes = []
