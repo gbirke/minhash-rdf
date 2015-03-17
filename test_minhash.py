@@ -24,4 +24,4 @@ def test_minhash_different_sets():
 def test_minhash_similar_sets():
     s1 = ("4", "2", "3", "1")
     s2 = ("1", "2", "5", "6")
-    assert minhash.minhash_sets(s1, s2) == 0.25
+    assert minhash.minhash_sets(s1, s2) == 0.5
