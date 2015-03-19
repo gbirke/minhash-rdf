@@ -17,7 +17,7 @@ else:
 
 for change_rate in config.CHANGE_RATES:
     result_data[change_rate] = {}
-    actual_similarity = 1 - 1/float(100/change_rate)
+    actual_similarity = 1 - 1/(100/float(change_rate))
     for shingle_type in config.SHINGLE_CONFIG:
         result_data[change_rate][shingle_type] = {}
         for size in config.SHINGLE_CONFIG[shingle_type]:
