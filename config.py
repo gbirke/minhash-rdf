@@ -1,8 +1,10 @@
-#CHANGE_RATES = [1,3,5,8] + range(10,55,5)
-#CHANGE_RATES = [1,5,10,25,50]
-#CHANGE_RATES = range(1,11) + range(10,55,5)
-CHANGE_RATES = range(1,55,5)
 
+
+# How many change sets should be created and which amount of lines (in percent) should be changed.
+CHANGE_RATES = [1] + range(5,55,5)
+
+# What partitioning (shingling) strategies should be used and 
+# how many overlapping tokens should be tried for each strategy
 SHINGLE_CONFIG = {
 #    "byte": [2, 4, 8, 16],
     "word":   [1, 2, 3, 5],
@@ -10,4 +12,5 @@ SHINGLE_CONFIG = {
     "turtle": [1, 2, 3, 5]
 }
 
+# Sample size of MinHash, how many shashes should be stored in a signature
 NUM_HASHES = 500
